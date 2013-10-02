@@ -1,0 +1,29 @@
+.form-control {
+display: block;
+width: 20%;
+}
+
+.imageContainer {
+       width:600px; 
+       height:500px; 
+       background-image: url("http://img.docstoccdn.com/thumb/orig/423693.png");
+       background-size: contain;
+       background-repeat: no-repeat;
+ }
+#result-container{
+padding-top: 70;
+display: none;
+}
+ #p0{
+	font-size: 45;
+	padding-top: 50px;
+ }
+ #p1{
+	font-size: 45;
+ }
+ #p2{
+	padding-left: 70px;
+	padding-right: 70px;
+	padding-top: 30px;
+	font-size: 18;
+ }

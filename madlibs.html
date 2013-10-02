@@ -1,0 +1,174 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="css\bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="css\bootstrap-theme.css">
+	<link rel="stylesheet" type="text/css" href="css\form-theme.css">
+
+	<script type="text/javascript" src="js/jquery-2.0.3.js"></script>
+	<script type="text/javascript" src="js/bootstrap.js"></script>
+</head>
+<body>
+	<nav class="navbar navbar-fixed-top" role="navigation">
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#">MadLibs</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class="collapse navbar-collapse navbar-ex1-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li class="active"><a href="#">Home</a></li>
+				<li><a href="#about">About me</a></li>
+				<li><a href="#">Resume</a></li>
+				<li><a href="#">Projects</a></li>
+				<li><a href="#">Resources</a></li>
+				<li><a href="#">Contact</a></li>
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</nav>
+
+	<div class="jumbotron">
+		<div class="container">
+			<h1>MadLibs,</h1>
+			<p>A project for INFO 253</p>
+		</div>
+	</div>
+	<div class="container" id="result-container" align="center">
+
+	</div>
+	<div class="container" id="form-container">
+		<form id="myform" role="form">
+			<div class="form-group">
+				<label for="fname">First Name</label>
+				<input type="text" class="form-control" id="fname">
+			</div>
+			<div class="form-group">
+				<label for="lname">Last Name</label>
+				<input type="text" class="form-control" id="lname">
+			</div>
+			<div class="form-group">
+				<label for="age">Age</label>
+				<input type="text" class="form-control" id="age">
+			</div>
+			
+			<div class="radio">
+				<label class="radio">
+					<input type="radio" name="optionsRadios" id="gender" value="0" checked style="{width:40%;}">
+					Male
+				</label>
+			</div>
+			<div class="radio">
+				<label class="radio">
+					<input type="radio" name="optionsRadios" id="gender" value="1">
+					Female
+				</label>
+			</div>
+			
+
+			<div class="form-group">
+				<label class="select" for="bg">
+					Select a theme
+				</label>
+					<select class="form-control" id="bg">
+				    <option value=0>Basic</option>
+				    <option value=1>Fancy</option>
+				    <option value=2>Funny</option>
+				  </select>
+			</div>
+			<div class="form-group">
+				<label class="checkbox">
+				  <input id="agree" type="checkbox" value="agreed">
+				  I agree to terms of service.
+				</label>
+				<label class="checkbox">
+				  <input id="confirm" type="checkbox" value="confirmed">
+				  I confirm all the information above is valid.
+				</label>
+			</div>	
+
+			<button type="submit" class="btn btn-default" onclick="validate();">Submit</button>
+		</form>
+
+
+	</div>
+
+	<script type="text/javascript">
+
+	var basic_bg = "url(http://img.docstoccdn.com/thumb/orig/423693.png)";
+	var fancy_bg = "url(http://www.123certificates.com/incentives/free-certificate-border4.jpg)";
+	var funny_bg = "url(http://www.pptbackgrounds.net/uploads/school-ppt-certificate-backgrounds-wallpapers.jpg)";
+
+	var p1= "name lastname";
+	var p2= "You have been nominated as the most accomplished gender at the age of yourage.";
+	
+	
+	function validate(){
+		var age = $("#age").val();
+		
+		if ($("#fname").val()==null || $("#fname").val()=="" ) { alert("You must fill All the fields.")}
+		else if ($("#lname").val()==null || $("#lname").val()=="" ) { alert("You must fill All the fields.")}
+		else if ($("#age").val()==null || $("#age").val()=="") { alert("You must fill All the fields.")}
+		else if ((isNaN(age)) || (parseInt(age)>99) || (parseInt(age) <1)) { alert("Are you really "+$("#age").val()+" years old?")}
+		else if ($("input[type='checkbox']:checked").length!=2) { alert("You agree with both terms of service and verification.")}
+		else{make_story();}
+
+	}
+	
+	function make_story(){
+		var certificate_bg = $('#bg').val();
+		var selected_bg = "";
+		switch(parseInt(certificate_bg)){
+			case 0:
+				selected_bg = basic_bg;
+				break;
+			case 1:
+				selected_bg = fancy_bg;
+				break;
+			case 2:
+				selected_bg = funny_bg;
+				break;
+			default:
+				//selected_bg = basic_bg;
+				break;
+		}
+
+		var gender;
+		switch(parseInt($("input[type='radio']:checked").val())){
+			case 0:
+				gender = "man"
+				break;
+			case 1:
+				gender = "woman"
+				break;
+			default:
+				gender = "man"
+				break;
+		}
+
+		p1 = p1.replace("name",$("#fname").val())
+		p1 = p1.replace("lastname",$("#lname").val())
+
+		p2 = p2.replace("gender",gender)
+		p2 = p2.replace("yourage",$("#age").val())
+
+		$('#result-container').append("<div id=\"result-div\" class=\"imageContainer\"><div align=\"center\" id=\"p0\">Congradulation</div><div align=\"center\" id=\"p1\"></div><div align=\"center\" id=\"p2\"></div></div>");
+		$('#result-div').css("background-image",selected_bg);
+		$('#p1').text(p1);
+		$('#p2').text(p2);
+		$('#form-container').css("display", "none");
+		$('.jumbotron').css("display", "none");
+		$('#result-container').css("display", "block");
+	
+	}
+
+	$('#myform').submit(function () {return false;});
+	</script>
+	
+</body>
+</html>
